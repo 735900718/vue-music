@@ -1,6 +1,8 @@
 <template lang="html">
   <div class="header">
     <i class="iconfont icon-next" @click="$router.go(-1)"></i>
+    <h2 class="title">歌单</h2>
+    <i class="iconfont icon-fenxiang"></i>
   </div>
 </template>
 
@@ -10,25 +12,31 @@ export default {
 </script>
 
 <style lang="less">
-@height: 6vh;
-  .has-header {
-    padding-top: @height;
-  }
+  @height: .8rem;
+  .has-header { padding-top: @height; }
   .header {
     position: fixed;
     top: 0;
     z-index: 100000;
-    background: red;
     width: 100vw;
-    line-height: @height;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: red;
+    height: @height;
+    color: #fff;
+
     .iconfont {
       padding: 0 .1rem;
       font-size: .5rem;
-      color: #fff;
     }
     .icon-next {
       display: inline-block;
       transform: rotate(180deg);
+    }
+
+    .title {
     }
   }
 </style>

@@ -54,7 +54,7 @@
             </div>
         </div>
       </div>
-      <div class="button" @click="showNumb+=10">
+      <div class="button" @click="showNumb+=5">
         点击查看更多
       </div>
     </template>

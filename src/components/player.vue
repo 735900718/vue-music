@@ -1,42 +1,72 @@
 <style lang="less">
-  .footer {
-    position: fixed;
+.footer {
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  width: 100vw;
+  height: 10vh;
+  background: #222;
+  overflow: hidden;
+  img {
+    width: 10vh;
+  }
+  .ctrl {
     display: flex;
-    bottom: 0;
-    width: 100vw;
-    height: 10vh;
-    background: #000;
-    overflow: hidden;
-    img {
-      width: 10vh;
+    width: 100%;
+    &>i {
+      padding: 0 .2rem;
+      color: #fff;
+      font-size: 7vh;
+      line-height: 10vh;
     }
-    .ctrl {
+    .play {
+      background: green;
+    }
+    .main {
       display: flex;
-      i {
-        padding: 0 .2rem;
-        color: #fff;
-        font-size: 7vh;
-        line-height: 10vh;
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      font-size: .28rem;
+      color: #fff;
+      .main-title {
+        line-height: .2rem;
+        overflow: hidden;
+        h2 {
+          padding-left: -20px;
+        }
       }
-      .play {
-        background: green;
-      }
-      .main {
+      .range {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        font-size: .28rem;
-        color: #fff;
-        .main-title {
-          line-height: .2rem;
-          overflow: hidden;
-          h2 {
-            padding-left: -20px;
+        align-items: center;
+        padding-right: .5rem;
+        span {
+          flex-grow: 0;
+        }
+        .rangeCtrl {
+          display: flex;
+          align-items: center;
+          flex-grow: 2;
+          margin: 0 .2rem;
+          height: 2px;
+          background: #aaa;
+          .now {
+            display: block;
+            transition: width 1s;
+            height: 100%;
+            background: red;
+          }
+          .iconfont {
+            display: block;
+            font-size: .2rem;
+            line-height: .3rem;
+            margin:  0 -.1rem;
           }
         }
       }
     }
   }
+}
 </style>
 
 <template lang="html">
@@ -46,13 +76,21 @@
     <div class="ctrl" ref="ctrl">
       <i class="iconfont"
       :class="{
-        'icon-bofang': !onPlay,
-        'icon-zanting': onPlay
+        'icon-bofang': !$store.state.song.onplay,
+        'icon-zanting': $store.state.song.onplay
         }"
       @click="play()"></i>
       <div class="main">
         <p class="main-title"><h2>{{ $store.state.song.name }}</h2></p>
-        <p>{{ nowTime | time}} +++++ {{songLength | time}}</p>
+        <div class="range">
+          <span>{{ nowTime | time}}</span>
+          <div class="rangeCtrl">
+            <i class="now"
+            :style="{ width : Math.round((nowTime/songLength)*100)+'%' }"></i>
+            <i class="iconfont icon-yuan"></i>
+          </div>
+          <span>{{songLength | time}}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -66,15 +104,11 @@ export default {
       songLength: null,   //音乐总长度
       nowTime: null,      //播放到第几分钟
       timer: null,         //播放进度定时器
+      // width: 0,
     }
   },
   mounted() {
     let that = this
-    //JS控制左侧图片的宽度
-    this.$refs.img.width = this.$refs.img.height
-    //JS控制右侧控制器的样式属性
-    this.$refs.ctrl.style.marginLeft = this.$refs.img.width + 'px'
-    this.$refs.ctrl.style.width = window.innerWidth - this.$refs.img.width + 'px'
     //当歌曲加载完毕时，获取歌曲的长度
     this.$refs.audio.oncanplay = function() {
       that.songLength = Math.round(this.duration)
@@ -106,6 +140,7 @@ export default {
       if(this.onPlay) {
         that.timer = setInterval(function () {
           that.nowTime = Math.round(that.$refs.audio.currentTime)
+          // console.log(Math.round((that.nowTime/that.songLength)*100))
           if(that.nowTime == that.songLength) {
             that.onPlay = false
             clearInterval(that.timer)
