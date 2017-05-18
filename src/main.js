@@ -8,8 +8,10 @@ import store from './store'
 import player from './components/player'
 import './assets/font/iconfont.css'
 import mheader from './components/header'
+import search from './components/search'
 
 Vue.component('player',player)
+Vue.component('search',search)
 Vue.component('m-header',mheader)
 Vue.prototype.$http = axios
 Vue.config.productionTip = false

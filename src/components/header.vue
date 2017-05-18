@@ -12,19 +12,19 @@ export default {
 </script>
 
 <style lang="less">
-  @height: .8rem;
-  .has-header { padding-top: @height; }
+  @import "../assets/color.less";
+  .has-header { padding-top: @headerHeight; }
   .header {
     position: fixed;
     top: 0;
-    z-index: 100000;
+    z-index: 1000;
     width: 100vw;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background: red;
-    height: @height;
+    background: @darkColor;
+    height: @headerHeight;
     color: #fff;
 
     .iconfont {
@@ -34,9 +34,6 @@ export default {
     .icon-next {
       display: inline-block;
       transform: rotate(180deg);
-    }
-
-    .title {
     }
   }
 </style>

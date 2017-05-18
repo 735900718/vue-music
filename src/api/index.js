@@ -20,3 +20,25 @@ export function searchMusic({id,name,pic}){
       console.log(error)
     })
 }
+
+export function searchOneMusic({count=0,name}){
+  console.log('searchOneMusic',count,name)
+  //没有输入内容时不提交请求
+  if(!name){return}
+  this.$router.push('/playlist/'+name)
+  this.$http.get(`https://api.imjad.cn/cloudmusic/?type=search&search_type=${this.selected}&offset=${count}&limit=20&s=${name}`)
+    .then( respones => {
+      if(this.selected == 1) {
+        this.$store.commit({
+          type: 'base',
+          string: name,
+          data: respones.data.result.songs
+        })
+      }else if(this.selected == 10) {
+        console.log('专辑',respones)
+      }
+    })
+    .catch( error => {
+      console.log(error)
+    })
+}

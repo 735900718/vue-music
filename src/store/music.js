@@ -19,6 +19,9 @@ const mutations = {
   },
   songPic : (state,pic) => {
     state.song.pic = pic
+  },
+  play : (state) => {
+    state.song.onplay = !state.song.onplay
   }
 }
 
