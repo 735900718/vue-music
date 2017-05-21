@@ -17,7 +17,6 @@
       background: rgba(0,0,0,.2);
       color: #fff;
       box-shadow: 0 0 .2rem 3px rgba(0,0,0,.3);
-
       .iconfont {
         padding: 0 .1rem;
         font-size: .5rem;
@@ -58,10 +57,8 @@
         line-height: 2rem;
         width: 20%;
         text-align: center;
-        &:nth-child(1) {
-          // align-self: flex-start;
-        }
-        &.icon-zanting {
+        &.icon-zanting,
+        &.icon-bofang {
           font-size: .8rem;
         }
         &.icon-suiji {
@@ -97,10 +94,16 @@
           @click="stateChange"
         ></i>
         <i class="iconfont icon-previous"></i>
-        <i class="iconfont icon-zanting"></i>
+        <i class="iconfont"
+          :class="{
+            'icon-zanting' : onplay,
+            'icon-bofang' : !onplay
+          }"
+          @click="play"></i>
         <i class="iconfont icon-next1"></i>
         <i class="iconfont icon-bofangqi_shouyegequliebiao_"></i>
       </div>
+      <song-list :show="show"/>
     </div>
   </transition>
 </template>
@@ -110,7 +113,10 @@ import { blur } from '../libs/index.js'
 export default {
   data() {
     return {
-      state: 0
+      state: 0,
+      onplay: this.$store.state.song.onplay,
+      audio: document.querySelector('audio'),
+      show: false
     }
   },
   mounted() {
@@ -121,8 +127,22 @@ export default {
     stateChange: function() {
       this.state = this.state+1 > 2 ? 0 : this.state+1
       if(this.state == 0){
-        console.log(this.$refs.audio)
-        console.log(document.querySelector('audio').loop=true)
+        this.audio.loop = true
+      }else if(this.state == 1) {
+        console.log('列表循环')
+        this.audio.loop = false
+      }else if(this.state == 2) {
+        console.log('随机播放')
+        this.audio.loop = false
+      }
+    },
+    play: function() {
+      this.$store.commit('play')
+      this.onplay = this.$store.state.song.onplay
+      if(this.audio.paused){
+        this.audio.play()
+      }else {
+        this.audio.pause()
       }
     }
   }

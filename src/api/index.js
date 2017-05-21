@@ -8,6 +8,8 @@ export function searchMusic({id,name,pic}){
       console.log('search')
       let item = respones.data.data[0]
       let data = {}
+      data.id = id
+      data.time = Number(new Date())
       data.onplay = false
       data.name = name
       data.pic = pic
@@ -30,9 +32,9 @@ export function searchOneMusic({count=0,name}){
     .then( respones => {
       if(this.selected == 1) {
         this.$store.commit({
-          type: 'base',
-          string: name,
-          data: respones.data.result.songs
+              type: 'base',
+              string: name,
+              data: respones.data.result.songs
         })
       }else if(this.selected == 10) {
         console.log('专辑',respones)
