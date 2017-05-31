@@ -121,7 +121,6 @@ export default {
         })
     },
     searchGedanOne: function(string) {
-      console.log('searchGedanOne')
       let that = this
       this.$router.push('/playlist/'+string)
       if(sessionStorage[string]){
@@ -129,7 +128,6 @@ export default {
       }
       this.$http.get(`https://api.imjad.cn/cloudmusic/?type=playlist&id=${string}`)
         .then( respones => {
-          console.log(string,respones.data.playlist.tracks)
           this.$store.commit({
             type: 'base',
             string: string,

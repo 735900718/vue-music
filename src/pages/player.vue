@@ -120,7 +120,9 @@ export default {
     }
   },
   mounted() {
-    this.blur(this.$refs.blur,this.$store.state.song.pic,5)
+      setTimeout(()=>{
+          this.blur(this.$refs.blur,this.$store.state.song.pic,5)
+      },1)
   },
   methods: {
     blur: blur,
@@ -137,6 +139,7 @@ export default {
       }
     },
     play: function() {
+        //改变VUEX 的play状态
       this.$store.commit('play')
       this.onplay = this.$store.state.song.onplay
       if(this.audio.paused){

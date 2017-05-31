@@ -38,12 +38,12 @@
 export default {
     props: [ 'show' ],
     data(){
-      // height: this.$refs.songList.offsetHeight
-        height: '50vh'
+        return {
+            height: '50vh'
+        }
     },
     created(){
-      let a = this.$store.state.song
-      console.log(Object.call(this.$store.state.songList,a))
+
     },
     methods: {
         click: function(item){

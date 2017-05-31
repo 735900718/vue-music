@@ -22,7 +22,6 @@ const mutations = {
 
   },
   base : (state,payload) => {
-    console.log(payload)
     state.base[payload.string] = payload.data
   },
   songPic : (state,pic) => {

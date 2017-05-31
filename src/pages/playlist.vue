@@ -77,7 +77,6 @@ export default {
     let that = this
     let timer = setInterval(()=>{
       if(this.$store.state.base[this.$route.params.id]){
-        console.log(1)
         this.show = true
         clearInterval(timer)
       }
